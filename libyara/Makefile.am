@@ -72,6 +72,8 @@ if DEX_MODULE
 MODULES += modules/dex/dex.c
 endif
 
+MODULES += modules/malutils/malutils.c
+
 if PB_TESTS_MODULE
 MODULES += modules/pb_tests/pb_tests.c
 MODULES += modules/pb_tests/pb_tests.pb-c.c

@@ -278,6 +278,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         NULL);                                                  \
   }
 
+#define return_sized_string(string, length)                     \
+  {                                                             \
+    char* s = (char*) (string);                                 \
+    assertf(                                                    \
+        __function_obj->return_obj->type == OBJECT_TYPE_STRING, \
+        "return type differs from function declaration");       \
+    return yr_object_set_string(                                \
+        (s != (char*) YR_UNDEFINED) ? s : NULL,                 \
+        (s != (char*) YR_UNDEFINED) ? length : 0,               \
+        __function_obj->return_obj,                             \
+        NULL);                                                  \
+  }
+
 typedef int (*YR_EXT_INITIALIZE_FUNC)(YR_MODULE* module);
 
 typedef int (*YR_EXT_FINALIZE_FUNC)(YR_MODULE* module);

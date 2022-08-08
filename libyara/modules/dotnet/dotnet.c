@@ -1714,9 +1714,11 @@ void dotnet_parse_us(PE* pe, int64_t metadata_root, PSTREAM_HEADER us_header)
 
   const uint32_t ush_sz = yr_le32toh(us_header->Size);
 
-  const uint8_t* offset = pe->data + metadata_root +
-                          yr_le32toh(us_header->Offset);
-  const uint8_t* end_of_header = offset + ush_sz;
+  const uint8_t* start_of_header = pe->data + metadata_root +
+                                   yr_le32toh(us_header->Offset);
+  const uint8_t* end_of_header = start_of_header + ush_sz;
+
+  const uint8_t* offset = start_of_header;
 
   // Make sure the header size is larger than 0 and its end is not past the
   // end of PE.
@@ -1753,7 +1755,7 @@ void dotnet_parse_us(PE* pe, int64_t metadata_root, PSTREAM_HEADER us_header)
           blob_result.length,
           pe->object,
           "user_strings[%i]",
-          i);
+          (int) (offset - start_of_header - 1));
 
       offset += blob_result.length;
       i++;
